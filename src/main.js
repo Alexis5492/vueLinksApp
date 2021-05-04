@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-// import VueFire from "vuefire";
-// Vue.use(VueFire);
-
+//Agregar vuefire decrepated requiere 2020
 
 Vue.config.productionTip = false
 

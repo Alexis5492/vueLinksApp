@@ -9,8 +9,9 @@
       <div class="card-body">
         <form v-on:submit.prevent="addLink" class="form-inline">
           <div class="form-group">
-            <label for="">Title</label>
+            <label for="title">Title</label>
             <input
+              id="title"
               class="form-control"
               v-model="newLink.title"
               placeholder="Title"
@@ -18,8 +19,9 @@
             />
           </div>
           <div class="form-group">
-            <label for="">Author</label>
+            <label for="author">Author</label>
             <input
+              id="author"
               class="form-control"
               v-model="newLink.author"
               placeholder="Author"
@@ -27,16 +29,54 @@
             />
           </div>
           <div class="form-group">
-            <label for="">URL</label>
+            <label for="url">URL</label>
             <input
+              id="url"
               class="form-control"
               v-model="newLink.url"
               placeholder="URL"
               type="text"
             />
           </div>
+
+          <input type="submit" class="btn btn-success" value="Add a Link" />
         </form>
       </div>
+
+      <hr />
+      
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Links List</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Url</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr v-for="link in links" v-bind:key="link.id">
+                <td>
+                  <a target="_blank" v-bind:href="link.url">{{ link.title }}</a>
+                </td>
+                <td>
+                  {{ link.author }}
+                </td>
+                <td>
+                  <button>Delete</button>
+                </td>
+              </tr> -->
+            </tbody>
+
+          </table>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -47,6 +87,8 @@ import FireBase from "firebase";
 let config = {
   apiKey: "AIzaSyDlQm5loGU8tyoNHfrFpiisEIEsL1-wkVU",
   authDomain: "vuelinkappfire.firebaseapp.com",
+  databaseURL:
+    "https://vuelinkappfire-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "vuelinkappfire",
   storageBucket: "vuelinkappfire.appspot.com",
   messagingSenderId: "198201933434",
@@ -75,7 +117,8 @@ export default {
   },
   methods: {
     addLink() {
-      console.log("addLink");
+      //console.log("addLink");
+      linksRef.push(this.newLink);
     },
   },
 };
