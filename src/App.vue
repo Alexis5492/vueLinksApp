@@ -44,7 +44,7 @@
       </div>
 
       <hr />
-      
+
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Links List</h3>
@@ -67,46 +67,48 @@
                   {{ link.author }}
                 </td>
                 <td>
-                  <button v-on:click="deleteLink(link)" class="btn btn-danger">
-                  </button>
+                  <button
+                    v-on:click="deleteLink(link)"
+                    class="btn btn-danger"
+                  ></button>
                 </td>
               </tr>
             </tbody>
-
           </table>
-
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import FireBase from "firebase";
+import firebase from "firebase";
+import "firebase/database";
 
-let config = {
-  apiKey: "AIzaSyDlQm5loGU8tyoNHfrFpiisEIEsL1-wkVU",
-  authDomain: "vuelinkappfire.firebaseapp.com",
-  databaseURL:
-    "https://vuelinkappfire-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "vuelinkappfire",
-  storageBucket: "vuelinkappfire.appspot.com",
-  messagingSenderId: "198201933434",
-  appId: "1:198201933434:web:84a37cde9ac787bde545c3",
-  measurementId: "G-0YNHWPMRYB",
-};
+const db = firebase
+  .initializeApp({
+    databaseURL:
+      "https://vuelinkappfire-default-rtdb.europe-west1.firebasedatabase.app",
+  })
+  .database();
 
-let app = FireBase.initializeApp(config);
-let db = app.database();
-
+// import FireBase from "firebase";
+// let config = {
+//   apiKey: "AIzaSyDlQm5loGU8tyoNHfrFpiisEIEsL1-wkVU",
+//   authDomain: "vuelinkappfire.firebaseapp.com",
+//   databaseURL:
+//     "https://vuelinkappfire-default-rtdb.europe-west1.firebasedatabase.app",
+//   projectId: "vuelinkappfire",
+//   storageBucket: "vuelinkappfire.appspot.com",
+//   messagingSenderId: "198201933434",
+//   appId: "1:198201933434:web:84a37cde9ac787bde545c3",
+//   measurementId: "G-0YNHWPMRYB",
+// };
+// let app = FireBase.initializeApp(config);
+// let db = app.database();
 let linksRef = db.ref("links");
 
 export default {
-  name: "App",
-  firebase: {
-    links: linksRef,
-  },
   data() {
     return {
       links: [],
@@ -117,10 +119,16 @@ export default {
       },
     };
   },
+  name: "App",
+  firebase: {
+    links: linksRef,
+  },
   methods: {
     addLink() {
-      //console.log("addLink");
       linksRef.push(this.newLink);
+      this.newLink.title = "";
+      this.newLink.author = "";
+      this.newLink.url = "";
     },
     deleteLink(link) {
       linksRef.child(link[".key"]).remove();
