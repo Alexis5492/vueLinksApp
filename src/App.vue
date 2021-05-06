@@ -59,7 +59,7 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr v-for="link in links" v-bind:key="link.id">
+              <tr v-for="link in links" v-bind:key="link.id">
                 <td>
                   <a target="_blank" v-bind:href="link.url">{{ link.title }}</a>
                 </td>
@@ -67,9 +67,10 @@
                   {{ link.author }}
                 </td>
                 <td>
-                  <button>Delete</button>
+                  <button v-on:click="deleteLink(link)" class="btn btn-danger">
+                  </button>
                 </td>
-              </tr> -->
+              </tr>
             </tbody>
 
           </table>
@@ -108,6 +109,7 @@ export default {
   },
   data() {
     return {
+      links: [],
       newLink: {
         title: "",
         author: "",
@@ -119,6 +121,9 @@ export default {
     addLink() {
       //console.log("addLink");
       linksRef.push(this.newLink);
+    },
+    deleteLink(link) {
+      linksRef.child(link[".key"]).remove();
     },
   },
 };
