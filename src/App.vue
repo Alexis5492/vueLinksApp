@@ -125,15 +125,33 @@ export default {
   },
   methods: {
     addLink() {
+      console.log("linksRef", linksRef);
+      console.log("@links", this.links);
       linksRef.push(this.newLink);
-      this.newLink.title = "";
-      this.newLink.author = "";
-      this.newLink.url = "";
+      this.cleanForm(this.newLink);
+      // this.newLink.title = "";
+      // this.newLink.author = "";
+      // this.newLink.url = "";
     },
     deleteLink(link) {
-      linksRef.child(link[".key"]).remove();
+      console.log("linksRef", linksRef);
+      console.log("@child", linksRef.child(link[".key"]).toString());
+      linksRef
+        .child(link[".key"])
+        .remove()
+        .then(function () {
+          console.log("Remove succeeded.");
+        })
+        .catch(function (error) {
+          console.log("Remove failed: " + error.message);
+        });
     },
-  },
+    cleanForm(link) {
+      for(const prop in link) {
+        link[prop] = "";
+      }
+    }
+  }
 };
 </script>
 
